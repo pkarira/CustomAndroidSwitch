@@ -35,7 +35,7 @@ public class CustomSwitch extends Switch {
     public void setTrackText(int leftString,int rightString)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            this.setTrackDrawable(new SwitchTrackTextDrawable(mContext, leftString, rightString));
+            this.setTrackDrawable(new SwitchTrackTextDrawable(mContext, leftString, rightString,100,400,30,45));
         }
     }
 }

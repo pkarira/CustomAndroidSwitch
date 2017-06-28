@@ -27,58 +27,62 @@ public class SwitchTrackTextDrawable extends Drawable {
 
     private final Paint mTextPaint;
 
+    private int mHeight;
+
+    private int mWidth;
+
+    private int cornerRadius;
+
+    private int textSize;
+
     public SwitchTrackTextDrawable(@NonNull Context context,
                                    @StringRes int leftTextId,
-                                   @StringRes int rightTextId) {
+                                   @StringRes int rightTextId, int mHeight, int mWidth,int textSize,int radius) {
         mContext = context;
-
-        // Left text
         mLeftText = context.getString(leftTextId);
         mTextPaint = createTextPaint();
-
-        // Right text
         mRightText = context.getString(rightTextId);
+        this.mHeight = mHeight;
+        this.mWidth = mWidth;
+        cornerRadius=radius;
+        this.textSize=textSize;
     }
 
     private Paint createTextPaint() {
         Paint textPaint = new Paint();
-        //noinspection deprecation
         textPaint.setColor(mContext.getResources().getColor(android.R.color.white));
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setTextSize(30);
-        // Set textSize, typeface, etc, as you wish
         return textPaint;
     }
-    private Paint createBackgroundPaint()
-    {
+
+    private Paint createBackgroundPaint() {
         Paint background = new Paint();
-        //noinspection deprecation
         background.setColor(mContext.getResources().getColor(android.R.color.black));
         background.setAntiAlias(true);
         background.setStyle(Paint.Style.FILL);
         background.setTextAlign(Paint.Align.CENTER);
         background.setTextSize(30);
-        // Set textSize, typeface, etc, as you wish
         return background;
     }
+
     @Override
     public void draw(Canvas canvas) {
         final Rect textBounds = new Rect();
-        Log.e("base bounds",canvas.getClipBounds()+"");
-        RectF rect=new RectF(0,0,400,100);
+        Log.e("base bounds", canvas.getClipBounds() + "");
+        Log.e("height", canvas.getHeight() + "");
+        Log.e("width", canvas.getWidth() + "");
+        RectF rect = new RectF(0, 0, 400, 100);
         mTextPaint.getTextBounds(mRightText, 0, mRightText.length(), textBounds);
-        canvas.drawRoundRect(rect,45,45,createBackgroundPaint());
+        canvas.drawRoundRect(rect,50 , 50, createBackgroundPaint());
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(3);
-        canvas.drawRoundRect(rect,45,45,paint);
-        // The baseline for the text: centered, including the height of the text itself
+        canvas.drawRoundRect(rect, 50,50, paint);
         final int heightBaseline = canvas.getClipBounds().height() / 2 + textBounds.height() / 2;
-
-        // This is one quarter of the full width, to measure the centers of the texts
         final int widthQuarter = canvas.getClipBounds().width() / 4;
         canvas.drawText(mLeftText, 0, mLeftText.length(),
                 widthQuarter, heightBaseline,
@@ -86,6 +90,8 @@ public class SwitchTrackTextDrawable extends Drawable {
         canvas.drawText(mRightText, 0, mRightText.length(),
                 widthQuarter * 3, heightBaseline,
                 mTextPaint);
+        canvas.save();
+
     }
 
     @Override

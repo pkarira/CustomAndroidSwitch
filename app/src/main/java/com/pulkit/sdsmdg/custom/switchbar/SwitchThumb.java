@@ -17,14 +17,15 @@ public class SwitchThumb extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         Log.e("bounds",canvas.getClipBounds()+"");
-        RectF rect=new RectF(canvas.getClipBounds().left,canvas.getClipBounds().top,canvas.getClipBounds().right,canvas.getClipBounds().bottom);
+        Log.e("height1",canvas.getHeight()+"");
+        Log.e("width1",canvas.getWidth()+"");
+        RectF rect=new RectF(100,0,200,50);
         Paint background = new Paint();
-        //noinspection deprecation
         background.setColor(Color.WHITE);
         background.setAntiAlias(true);
         background.setStyle(Paint.Style.FILL);
         background.setTextAlign(Paint.Align.CENTER);
-        canvas.drawRoundRect(rect,45,45,background);
+       canvas.drawRoundRect(rect,45,45,background);
     }
 
     @Override

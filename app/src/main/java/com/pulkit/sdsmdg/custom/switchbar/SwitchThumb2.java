@@ -17,7 +17,9 @@ public class SwitchThumb2 extends Drawable {
     @Override
     public void draw(Canvas canvas) {
         Log.e("bounds",canvas.getClipBounds()+"");
-        RectF rect=new RectF(canvas.getClipBounds().left,canvas.getClipBounds().top,canvas.getClipBounds().right,canvas.getClipBounds().bottom);
+        Log.e("height1",canvas.getHeight()+"");
+        Log.e("width1",canvas.getWidth()+"");
+        RectF rect=new RectF(0,0,200,100);
         Paint background = new Paint();
         //noinspection deprecation
         background.setColor(Color.WHITE);

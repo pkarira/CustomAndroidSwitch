@@ -1,6 +1,11 @@
 package com.pulkit.sdsmdg.custom.switchbar;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,7 +17,6 @@ import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
-    Switch mySwitch;
     TextView tvState;
 
     @Override
@@ -20,8 +24,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CustomSwitch customSwitch=(CustomSwitch) findViewById(R.id.mySwitch);
-        customSwitch.setTrackText(R.string.store,R.string.closet);
-        //customSwitch.setThumbDrawable(getResources().getDrawable(R.drawable.customswitchselector));
+        customSwitch.setTrackText( R.string.store,R.string.closet);
+       // customSwitch.setThumbDrawable(shape);
         customSwitch.setThumbDrawable(addSelector());
         tvState=(TextView)findViewById(R.id.tvState);
         customSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -61,8 +65,9 @@ public class MainActivity extends ActionBarActivity {
     }
     public StateListDrawable addSelector() {
         StateListDrawable res = new StateListDrawable();
-        res.addState(new int[]{android.R.attr.state_checked},getResources().getDrawable(R.drawable.customswitchselector));
-        res.addState(new int[]{-android.R.attr.state_checked},getResources().getDrawable(R.drawable.customswitchselector));
+        Drawable drawable=  getResources().getDrawable(R.drawable.large_switch);
+        res.addState(new int[]{android.R.attr.state_checked},drawable);
+        res.addState(new int[]{-android.R.attr.state_checked},drawable);
         return res;
     }
 }
