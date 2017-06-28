@@ -1,6 +1,7 @@
 package com.pulkit.sdsmdg.custom.switchbar;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,6 +10,8 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -78,7 +81,19 @@ public class CustomSwitch extends Switch {
                 this.setTrackDrawable(new SwitchTrackTextDrawable(mContext, leftString, rightString, 23, 300, 50, borderWidth, 25, trackColor, trackTextColor, borderColor));
             }
             this.setThumbDrawable(addSelector(SMALL));
+            this.setOnTouchListener(new OnTouchListener() {
+                // set via variable since the switch will trigger a move
+                // action on toggle, but the on draw event will trigger
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
+
+                    }
+                    return false;
+                }
+            });
         }
+
     }
 
     public StateListDrawable addSelector(String type) {
