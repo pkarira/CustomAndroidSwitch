@@ -19,16 +19,18 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CustomSwitch customSwitch=(CustomSwitch) findViewById(R.id.mySwitch);
+        final CustomSwitch customSwitch=(CustomSwitch) findViewById(R.id.mySwitch);
         tvState=(TextView)findViewById(R.id.tvState);
         customSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-
+                    Log.e("in","ij");
+                    customSwitch.changeBackground(false);
                 }
                 else {
-
+                    Log.e("in","ij");
+                    customSwitch.changeBackground(false);
                 }
             }
         });
@@ -56,11 +58,5 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public StateListDrawable addSelector() {
-        StateListDrawable res = new StateListDrawable();
-        res.addState(new int[]{android.R.attr.state_checked},getResources().getDrawable(R.drawable.large_switch));
-        res.addState(new int[]{-android.R.attr.state_checked},getResources().getDrawable(R.drawable.large_switch));
-        return res;
     }
 }

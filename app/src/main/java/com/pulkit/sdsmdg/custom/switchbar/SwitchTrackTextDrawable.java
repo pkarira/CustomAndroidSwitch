@@ -43,6 +43,8 @@ public class SwitchTrackTextDrawable extends Drawable {
 
     private int borderWidth;
 
+    private boolean setMoving;
+
     public SwitchTrackTextDrawable(@NonNull Context context,
                                    String leftTextString,
                                    String rightTextString, int textSize, int switchWidth, int switchHeight, int borderWidth, int radius, int trackColor, int textColor, int strokeColor) {
@@ -58,6 +60,7 @@ public class SwitchTrackTextDrawable extends Drawable {
         this.trackColor = trackColor;
         this.strokeColor = strokeColor;
         this.borderWidth = borderWidth;
+        setMoving = false;
     }
 
     private Paint createTextPaint() {
@@ -92,6 +95,8 @@ public class SwitchTrackTextDrawable extends Drawable {
         paint.setColor(strokeColor);
         paint.setStrokeWidth(borderWidth);
         canvas.drawRoundRect(rect, radius, radius, paint);
+        if(setMoving)
+            return;
         final int heightBaseline = canvas.getClipBounds().height() / 2 + textBounds.height() / 2;
         final int widthQuarter = canvas.getClipBounds().width() / 4;
         canvas.drawText(mLeftText, 0, mLeftText.length(),
@@ -113,5 +118,15 @@ public class SwitchTrackTextDrawable extends Drawable {
     @Override
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
+    }
+
+    public void changeBackground(boolean isMoving) {
+        if (isMoving == true) {
+            setMoving=true;
+            invalidateSelf();
+        } else {
+            setMoving=false;
+            invalidateSelf();
+        }
     }
 }

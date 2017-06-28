@@ -31,7 +31,7 @@ public class CustomSwitch extends Switch {
     public int thumbColor = Color.WHITE;
     public int borderWidth = 2;
     public int trackTextColor = Color.WHITE;
-
+    private SwitchTrackTextDrawable switchTrackTextDrawable;
     public CustomSwitch(Context context) {
         super(context);
     }
@@ -73,26 +73,29 @@ public class CustomSwitch extends Switch {
     public void setSwitch() {
         if (type.equals(LARGE)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                this.setTrackDrawable(new SwitchTrackTextDrawable(mContext, leftString, rightString, 30, 400, 100, borderWidth, 50, trackColor, trackTextColor, borderColor));
+                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, 30, 400, 100, borderWidth, 50, trackColor, trackTextColor, borderColor);
+                this.setTrackDrawable(switchTrackTextDrawable);
             }
             this.setThumbDrawable(addSelector(LARGE));
         } else if (type.equals(SMALL)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                this.setTrackDrawable(new SwitchTrackTextDrawable(mContext, leftString, rightString, 23, 300, 50, borderWidth, 25, trackColor, trackTextColor, borderColor));
+                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, 23, 300, 50, borderWidth, 25, trackColor, trackTextColor, borderColor);
+                this.setTrackDrawable(switchTrackTextDrawable);
             }
             this.setThumbDrawable(addSelector(SMALL));
-            this.setOnTouchListener(new OnTouchListener() {
-                // set via variable since the switch will trigger a move
-                // action on toggle, but the on draw event will trigger
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
-                    }
-                    return false;
-                }
-            });
         }
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    changeBackground(true);
+                }else
+                {
+                    changeBackground(false);
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -108,5 +111,9 @@ public class CustomSwitch extends Switch {
             res.addState(new int[]{-android.R.attr.state_checked}, getResources().getDrawable(R.drawable.small_switch));
         }
         return res;
+    }
+    public void changeBackground(boolean isMoving)
+    {
+            switchTrackTextDrawable.changeBackground(isMoving);
     }
 }

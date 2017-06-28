@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textOn="@string/closet"
         android:textOff="@string/store"
-        app:size="@string/small"
+        app:size="@string/large"
         android:textStyle="bold"
         app:borderColor="#ffffff"
         android:showText="true"
