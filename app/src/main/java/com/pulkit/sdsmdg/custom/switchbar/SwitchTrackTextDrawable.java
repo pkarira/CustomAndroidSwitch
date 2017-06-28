@@ -27,61 +27,76 @@ public class SwitchTrackTextDrawable extends Drawable {
 
     private final Paint mTextPaint;
 
-    private int mHeight;
-
-    private int mWidth;
-
-    private int cornerRadius;
-
     private int textSize;
 
+    private int switchWidth;
+
+    private int switchHeight;
+
+    private int radius;
+
+    private int textColor;
+
+    private int trackColor;
+
+    private int strokeColor;
+
+    private int borderWidth;
+
+    private boolean setMoving;
+
     public SwitchTrackTextDrawable(@NonNull Context context,
-                                   @StringRes int leftTextId,
-                                   @StringRes int rightTextId, int mHeight, int mWidth,int textSize,int radius) {
+                                   String leftTextString,
+                                   String rightTextString, int textSize, int switchWidth, int switchHeight, int borderWidth, int radius, int trackColor, int textColor, int strokeColor) {
         mContext = context;
-        mLeftText = context.getString(leftTextId);
+        mLeftText = leftTextString;
+        this.textColor = textColor;
+        this.textSize = textSize;
         mTextPaint = createTextPaint();
-        mRightText = context.getString(rightTextId);
-        this.mHeight = mHeight;
-        this.mWidth = mWidth;
-        cornerRadius=radius;
-        this.textSize=textSize;
+        mRightText = rightTextString;
+        this.switchHeight = switchHeight;
+        this.switchWidth = switchWidth;
+        this.radius = radius;
+        this.trackColor = trackColor;
+        this.strokeColor = strokeColor;
+        this.borderWidth = borderWidth;
+        setMoving = false;
     }
 
     private Paint createTextPaint() {
         Paint textPaint = new Paint();
-        textPaint.setColor(mContext.getResources().getColor(android.R.color.white));
+        //noinspection deprecation
+        textPaint.setColor(textColor);
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(30);
+        textPaint.setTextSize(textSize);
+        // Set textSize, typeface, etc, as you wish
         return textPaint;
     }
 
     private Paint createBackgroundPaint() {
         Paint background = new Paint();
-        background.setColor(mContext.getResources().getColor(android.R.color.black));
+        background.setColor(trackColor);
         background.setAntiAlias(true);
         background.setStyle(Paint.Style.FILL);
         background.setTextAlign(Paint.Align.CENTER);
-        background.setTextSize(30);
         return background;
     }
 
     @Override
     public void draw(Canvas canvas) {
         final Rect textBounds = new Rect();
-        Log.e("base bounds", canvas.getClipBounds() + "");
-        Log.e("height", canvas.getHeight() + "");
-        Log.e("width", canvas.getWidth() + "");
-        RectF rect = new RectF(0, 0, 400, 100);
+        RectF rect = new RectF(0, 0, switchWidth, switchHeight);
         mTextPaint.getTextBounds(mRightText, 0, mRightText.length(), textBounds);
-        canvas.drawRoundRect(rect,50 , 50, createBackgroundPaint());
+        canvas.drawRoundRect(rect, radius, radius, createBackgroundPaint());
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.WHITE);
-        paint.setStrokeWidth(3);
-        canvas.drawRoundRect(rect, 50,50, paint);
+        paint.setColor(strokeColor);
+        paint.setStrokeWidth(borderWidth);
+        canvas.drawRoundRect(rect, radius, radius, paint);
+        if(setMoving)
+            return;
         final int heightBaseline = canvas.getClipBounds().height() / 2 + textBounds.height() / 2;
         final int widthQuarter = canvas.getClipBounds().width() / 4;
         canvas.drawText(mLeftText, 0, mLeftText.length(),
@@ -105,5 +120,15 @@ public class SwitchTrackTextDrawable extends Drawable {
     @Override
     public int getOpacity() {
         return PixelFormat.TRANSLUCENT;
+    }
+
+    public void changeBackground(boolean isMoving) {
+        if (isMoving == true) {
+            setMoving=true;
+            invalidateSelf();
+        } else {
+            setMoving=false;
+            invalidateSelf();
+        }
     }
 }

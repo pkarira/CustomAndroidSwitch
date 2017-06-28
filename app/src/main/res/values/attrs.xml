@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomSwitch">
+        <attr name="size" format="string"/>
+        <attr name="trackColor" format="color"/>
+        <attr name="thumbColor" format="color"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="borderWidth" format="integer"/>
+        <attr name="leftTrackText" format="string"/>
+        <attr name="rightTrackText" format="string"/>
+        <attr name="trackTextColor" format="color"/>
+    </declare-styleable>
+</resources>
