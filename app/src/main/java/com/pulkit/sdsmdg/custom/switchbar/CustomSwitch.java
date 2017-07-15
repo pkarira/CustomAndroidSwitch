@@ -9,6 +9,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,7 @@ public class CustomSwitch extends Switch {
     public int borderColor = Color.WHITE;
     public int trackColor = Color.BLACK;
     public int thumbColor = Color.WHITE;
-    public int borderWidth = 2;
+    public int borderWidth = 1;
     public int trackTextColor = Color.WHITE;
     private SwitchTrackTextDrawable switchTrackTextDrawable;
     public CustomSwitch(Context context) {
@@ -73,13 +74,13 @@ public class CustomSwitch extends Switch {
     public void setSwitch() {
         if (type.equals(LARGE)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, 30, 400, 100, borderWidth, 50, trackColor, trackTextColor, borderColor);
+                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, (int)dpToPixel(15), (int)dpToPixel(200), (int)dpToPixel(50), (int)dpToPixel(borderWidth), (int)dpToPixel(30), trackColor, trackTextColor, borderColor);
                 this.setTrackDrawable(switchTrackTextDrawable);
             }
             this.setThumbDrawable(addSelector(LARGE));
         } else if (type.equals(SMALL)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, 23, 300, 50, borderWidth, 25, trackColor, trackTextColor, borderColor);
+                switchTrackTextDrawable=new SwitchTrackTextDrawable(mContext, leftString, rightString, (int)dpToPixel(11), (int)dpToPixel(150), (int)dpToPixel(26), (int)dpToPixel(borderWidth), (int)dpToPixel(30), trackColor, trackTextColor, borderColor);
                 this.setTrackDrawable(switchTrackTextDrawable);
             }
             this.setThumbDrawable(addSelector(SMALL));
@@ -115,5 +116,10 @@ public class CustomSwitch extends Switch {
     public void changeBackground(boolean isMoving)
     {
             switchTrackTextDrawable.changeBackground(isMoving);
+    }
+    private float dpToPixel(float dp) {
+        DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+        float px = dp * (metrics.densityDpi/160f);
+        return px;
     }
 }

@@ -23,11 +23,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    Log.e("in","ij");
                     customSwitch.changeBackground(false);
                 }
                 else {
-                    Log.e("in","ij");
                     customSwitch.changeBackground(false);
                 }
             }
